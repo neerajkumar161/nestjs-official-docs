@@ -8,10 +8,13 @@ import {
   Post,
   UseFilters,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { Roles } from 'src/decorators/roles.decorator';
 import { AllExceptionsFilter } from './../exception-filters/all-exception.filters';
 import { RolesGuard } from './../guards/roles.guard';
+import { TimeoutInterceptor } from './../interceptors/timeout.interceptor';
+import { TransformInterceptor } from './../interceptors/transform.interceptor';
 import { ValidationPipe } from './../pipes/validation.pipe';
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/create-cat.dto';
@@ -21,6 +24,7 @@ import { CreateCat } from './interfaces/create-cat.interface';
 @Controller('cats')
 @UseFilters(AllExceptionsFilter)
 @UseGuards(RolesGuard)
+@UseInterceptors(TransformInterceptor, TimeoutInterceptor)
 export class CatsController {
   constructor(private catService: CatsService) {}
 
