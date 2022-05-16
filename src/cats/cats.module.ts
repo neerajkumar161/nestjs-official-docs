@@ -4,7 +4,13 @@ import { CatsService } from './cats.service';
 
 @Module({
   controllers: [CatsController],
-  providers: [CatsService],
+  providers: [
+    CatsService,
+    {
+      provide: 'CONNECTION',
+      useValue: 'Connection Value',
+    },
+  ],
   exports: [CatsService], // will share the same instance to other modules https://docs.nestjs.com/modules
 })
 export class CatsModule {}
