@@ -7,6 +7,7 @@ import { CatsService } from './cats.service';
   providers: [
     CatsService,
     {
+      // https://docs.nestjs.com/fundamentals/dynamic-modules#community-guidelines
       provide: 'CONNECTION',
       useValue: 'Connection Value',
     },

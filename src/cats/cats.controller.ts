@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   HttpStatus,
+  Inject,
   Param,
   ParseIntPipe,
   Post,
@@ -26,7 +27,10 @@ import { CreateCat } from './interfaces/create-cat.interface';
 @UseGuards(RolesGuard)
 @UseInterceptors(TransformInterceptor, TimeoutInterceptor)
 export class CatsController {
-  constructor(private catService: CatsService) {}
+  constructor(
+    private catService: CatsService,
+    @Inject('CONNECTION') private connect,
+  ) {}
 
   @Post()
   @Roles('admin', 'user')
@@ -34,6 +38,7 @@ export class CatsController {
   async create(
     @Body(new ValidationPipe()) createCatDto: CreateCatDto,
   ): Promise<CreateCat> {
+    console.log('Injected', this.connect);
     this.catService.create(createCatDto);
     return { message: 'Cat is created!' };
   }
