@@ -1,13 +1,8 @@
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { CommonService } from './common.service';
+import { Injectable } from '@nestjs/common';
 import { Cat } from './interfaces/cat.interface';
 
 @Injectable()
 export class CatsService {
-  constructor(
-    @Inject(forwardRef(() => CommonService))
-    private commonService: CommonService,
-  ) {}
   private readonly cats: Cat[] = [];
 
   create(cat: Cat) {

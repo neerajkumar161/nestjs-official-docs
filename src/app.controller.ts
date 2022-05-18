@@ -3,10 +3,14 @@ import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    private readonly appService: AppService, // private lazyModuleLoader: LazyModuleLoader,
+  ) {}
 
   @Get()
-  getHello(): string {
+  async getHello(): Promise<string> {
+    // const moduleRef = await this.lazyModuleLoader.load(() => LazyModule);
+    // console.log(moduleRef);
     return this.appService.getHello();
   }
 }
