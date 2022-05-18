@@ -3,7 +3,6 @@ import {
   Controller,
   Get,
   HttpStatus,
-  Inject,
   Param,
   ParseIntPipe,
   Post,
@@ -11,7 +10,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { Roles } from 'src/decorators/roles.decorator';
+import { Roles } from '../decorators/roles.decorator';
 import { AllExceptionsFilter } from './../exception-filters/all-exception.filters';
 import { RolesGuard } from './../guards/roles.guard';
 import { TimeoutInterceptor } from './../interceptors/timeout.interceptor';
@@ -28,8 +27,7 @@ import { CreateCat } from './interfaces/create-cat.interface';
 @UseInterceptors(TransformInterceptor, TimeoutInterceptor)
 export class CatsController {
   constructor(
-    private catService: CatsService,
-    @Inject('CONNECTION') private connect,
+    private catService: CatsService, // @Inject('CONNECTION') private connect,
   ) {}
 
   @Post()
@@ -38,7 +36,7 @@ export class CatsController {
   async create(
     @Body(new ValidationPipe()) createCatDto: CreateCatDto,
   ): Promise<CreateCat> {
-    console.log('Injected', this.connect);
+    // console.log('Injected', this.connect);
     this.catService.create(createCatDto);
     return { message: 'Cat is created!' };
   }
