@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
+import { Cat } from 'src/schema/cat.schema';
 import { CatsController } from './cats.controller';
 import { CatsService } from './cats.service';
-import { Cat } from './interfaces/cat.interface';
 describe('CatsController', () => {
   let catsController: CatsController;
   let catService: CatsService;
@@ -22,7 +22,9 @@ describe('CatsController', () => {
         { id: 1, name: 'Test', age: 12, breed: 'unknown' },
       ];
 
-      jest.spyOn(catService, 'findAll').mockImplementation(() => result);
+      jest
+        .spyOn(catService, 'findAll')
+        .mockImplementation(async () => await result);
 
       const expectRes = await catsController.findAll();
       console.log(expectRes);

@@ -2,14 +2,13 @@ import {
   Body,
   Controller,
   Get,
-  HttpStatus,
   Param,
-  ParseIntPipe,
   Post,
   UseFilters,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { ObjectId } from 'mongoose';
 import { Roles } from '../decorators/roles.decorator';
 import { AllExceptionsFilter } from './../exception-filters/all-exception.filters';
 import { RolesGuard } from './../guards/roles.guard';
@@ -18,7 +17,7 @@ import { TransformInterceptor } from './../interceptors/transform.interceptor';
 import { ValidationPipe } from './../pipes/validation.pipe';
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/create-cat.dto';
-import { Cat } from './interfaces/cat.interface';
+import { CatType } from './interfaces/cat.interface';
 import { CreateCat } from './interfaces/create-cat.interface';
 
 @Controller('cats')
@@ -42,18 +41,12 @@ export class CatsController {
   }
 
   @Get()
-  async findAll(): Promise<Cat[]> {
+  async findAll(): Promise<CatType[]> {
     return this.catService.findAll();
   }
 
   @Get(':id')
-  findOne(
-    @Param(
-      'id',
-      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
-    )
-    id: number,
-  ) {
+  findOne(@Param('id') id: ObjectId) {
     return this.catService.findOne(id);
   }
 }
