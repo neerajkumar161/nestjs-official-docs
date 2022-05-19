@@ -1,22 +1,25 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CatsController } from './cats/cats.controller';
 import { CatsModule } from './cats/cats.module';
+import configuration from './config/configuration';
 import { HttpExceptionFilter } from './exception-filters/http-exception.filters';
 import { logger } from './middlewares/logger.middleware';
 import { Cat, CatSchema } from './schema/cat.schema';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [configuration],
+    }),
     CatsModule,
-    MongooseModule.forRoot(
-      'mongodb+srv://neerajkumar:neerajkumar161@cluster0.yyx0x.mongodb.net/cats?retryWrites=true&w=majority',
-      {
-        connectionName: 'cats',
-      },
-    ),
+    MongooseModule.forRoot(process.env.MONGO_URL, {
+      connectionName: 'cats',
+    }),
     MongooseModule.forFeatureAsync(
       [
         // Not working

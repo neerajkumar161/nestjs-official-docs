@@ -1,11 +1,21 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ObjectId } from 'mongoose';
 import { Cat, CatDocument } from '../schema/cat.schema';
 
+interface EnvVariables {
+  port: string;
+  database: {
+    url: string;
+  };
+}
 @Injectable()
 export class CatsService {
-  constructor(@InjectModel(Cat.name) private catModel: Model<CatDocument>) {}
+  constructor(
+    @InjectModel(Cat.name) private catModel: Model<CatDocument>,
+    private configService: ConfigService<EnvVariables, true>,
+  ) {}
 
   async create(cat: Cat) {
     console.log(cat);
@@ -14,6 +24,8 @@ export class CatsService {
   }
 
   async findAll(): Promise<Cat[]> {
+    const url = this.configService.get('database.url', { infer: true });
+    console.log('Url', url);
     return await this.catModel.find().lean();
   }
 
