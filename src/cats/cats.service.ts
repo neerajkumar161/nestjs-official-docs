@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, ObjectId } from 'mongoose';
+import { Model } from 'mongoose';
 import { Cat, CatDocument } from '../schema/cat.schema';
 
 interface EnvVariables {
@@ -29,7 +29,7 @@ export class CatsService {
     return await this.catModel.find().lean();
   }
 
-  async findOne(id: ObjectId): Promise<Cat | null> {
+  async findOne(id: string): Promise<Cat | null> {
     const cat = await this.catModel.findOne({ _id: id }).lean();
     if (!cat) return null;
     return cat;

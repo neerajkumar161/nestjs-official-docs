@@ -1,6 +1,7 @@
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { AllExceptionsFilter } from './exception-filters/all-exception.filters';
+import { ValidationPipe } from './pipes/validation.pipe';
 
 async function bootstrap() {
   // Using Express Underlying API
@@ -11,6 +12,7 @@ async function bootstrap() {
   // app.useGlobalFilters(new HttpExceptionFilter());
   // Fully Customized Exception Filter
   app.useGlobalFilters(new AllExceptionsFilter(httpAdapter.getInstance()));
+  app.useGlobalPipes(new ValidationPipe());
   await app.listen(3000);
 }
 bootstrap();

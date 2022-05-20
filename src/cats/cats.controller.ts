@@ -8,7 +8,6 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ObjectId } from 'mongoose';
 import { Roles } from '../decorators/roles.decorator';
 import { AllExceptionsFilter } from './../exception-filters/all-exception.filters';
 import { RolesGuard } from './../guards/roles.guard';
@@ -19,6 +18,7 @@ import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { CatType } from './interfaces/cat.interface';
 import { CreateCat } from './interfaces/create-cat.interface';
+import { FindOneParams } from './validation/cat.findOnaParams';
 
 @Controller('cats')
 @UseFilters(AllExceptionsFilter)
@@ -46,7 +46,7 @@ export class CatsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: ObjectId) {
-    return this.catService.findOne(id);
+  findOne(@Param() params: FindOneParams) {
+    return this.catService.findOne(params.id);
   }
 }
