@@ -1,6 +1,7 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import * as Joi from 'joi';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CatsController } from './cats/cats.controller';
@@ -15,6 +16,17 @@ import { Cat, CatSchema } from './schema/cat.schema';
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configuration],
+      cache: true, // https://docs.nestjs.com/techniques/configuration#cache-environment-variables,
+      validationSchema: Joi.object({
+        NODE_ENV: Joi.string()
+          .valid('development', 'production', 'test', 'provision')
+          .default('development'),
+        PORT: Joi.number().default(3000),
+      }),
+      validationOptions: {
+        allowUnknown: true,
+        abortEarly: true,
+      },
     }),
     CatsModule,
     MongooseModule.forRoot(process.env.MONGO_URL, {
