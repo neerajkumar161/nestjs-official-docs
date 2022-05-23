@@ -5,6 +5,7 @@ import {
   NestModule,
 } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { MongooseModule } from '@nestjs/mongoose';
 import * as Joi from 'joi';
 import { AppController } from './app.controller';
@@ -14,10 +15,13 @@ import { CatsModule } from './cats/cats.module';
 import configuration from './config/configuration';
 import { HttpExceptionFilter } from './exception-filters/http-exception.filters';
 import { logger } from './middlewares/logger.middleware';
+import { OrdersModule } from './orders/orders.module';
 import { Cat, CatSchema } from './schema/cat.schema';
 
 @Module({
   imports: [
+    OrdersModule,
+    EventEmitterModule.forRoot(),
     CacheModule.register({ ttl: 5, max: 10 }),
     ConfigModule.forRoot({
       isGlobal: true,
