@@ -26,7 +26,7 @@ import { FindOneParams } from './validation/cat.findOnaParams';
 @UseInterceptors(TransformInterceptor, TimeoutInterceptor)
 export class CatsController {
   constructor(
-    private catService: CatsService, // @Inject('CONNECTION') private connect,
+    private catService: CatsService, // @Inject('CONNECTION') private connect, // @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
   @Post()

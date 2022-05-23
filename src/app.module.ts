@@ -1,4 +1,9 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import {
+  CacheModule,
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+} from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import * as Joi from 'joi';
@@ -13,6 +18,7 @@ import { Cat, CatSchema } from './schema/cat.schema';
 
 @Module({
   imports: [
+    CacheModule.register({ ttl: 5, max: 10 }),
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configuration],
