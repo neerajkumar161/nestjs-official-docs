@@ -32,6 +32,6 @@ export class CatsService {
   async findOne(id: string): Promise<Cat | null> {
     const cat = await this.catModel.findOne({ _id: id }).lean();
     if (!cat) return null;
-    return cat;
+    return new Cat(cat); // Serialization - will transform and remove, password property from response
   }
 }

@@ -1,3 +1,4 @@
+import { Optional } from '@nestjs/common';
 import { IsInt, IsString } from 'class-validator';
 
 export class CreateCatDto {
@@ -12,4 +13,8 @@ export class CreateCatDto {
 
   @IsString()
   breed: string;
+
+  @IsString()
+  @Optional()
+  password: string;
 }

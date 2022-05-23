@@ -1,5 +1,6 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Get,
   Param,
@@ -45,6 +46,7 @@ export class CatsController {
     return this.catService.findAll();
   }
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @Get(':id')
   findOne(@Param() params: FindOneParams) {
     return this.catService.findOne(params.id);

@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Exclude } from 'class-transformer';
 import { Document } from 'mongoose';
 
 export type CatDocument = Cat & Document;
@@ -14,6 +15,15 @@ export class Cat {
 
   @Prop()
   breed: string;
+
+  @Prop()
+  // @Optional()
+  @Exclude()
+  password: string;
+
+  constructor(partial: Partial<Cat>) {
+    Object.assign(this, partial);
+  }
 }
 
 export const CatSchema = SchemaFactory.createForClass(Cat);
