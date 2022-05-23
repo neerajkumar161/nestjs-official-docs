@@ -5,10 +5,12 @@ import {
   Get,
   Param,
   Post,
+  UploadedFile,
   UseFilters,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { Roles } from '../decorators/roles.decorator';
 import { AllExceptionsFilter } from './../exception-filters/all-exception.filters';
 import { RolesGuard } from './../guards/roles.guard';
@@ -46,9 +48,16 @@ export class CatsController {
     return this.catService.findAll();
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
   @Get(':id')
+  @UseInterceptors(ClassSerializerInterceptor)
   findOne(@Param() params: FindOneParams) {
     return this.catService.findOne(params.id);
+  }
+
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file', { dest: 'upload' }))
+  uploadFile(@UploadedFile() file: Express.Multer.File) {
+    console.log('File', file);
+    return 'Hello';
   }
 }

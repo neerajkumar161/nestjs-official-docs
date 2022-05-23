@@ -6,6 +6,9 @@ import { CatsService } from './cats.service';
 
 @Module({
   imports: [
+    // MulterModule.registerAsync({
+    //   useClass: MulterConfigService,
+    // }),
     MongooseModule.forFeature([{ name: Cat.name, schema: CatSchema }], 'cats'),
   ],
   controllers: [CatsController],
