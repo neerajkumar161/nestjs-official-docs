@@ -10,6 +10,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import * as Joi from 'joi';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
 import { CatsController } from './cats/cats.controller';
 import { CatsModule } from './cats/cats.module';
 import configuration from './config/configuration';
@@ -59,6 +60,8 @@ import { Cat, CatSchema } from './schema/cat.schema';
       ],
       'cats',
     ),
+    AuthModule,
+    // UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService, HttpExceptionFilter],
