@@ -5,6 +5,7 @@ import { DirectiveLocation, GraphQLDirective } from 'graphql';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthorsModule } from './authors/authors.module';
 import { CatsController } from './cats/cats.controller';
 import { upperDirectiveTransformer } from './common/directives/upper-case.directive';
 import { HttpExceptionFilter } from './exception-filters/http-exception.filters';
@@ -33,6 +34,7 @@ import { RecipesModule } from './recipes/recipes.module';
       // debug: false,
       // plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
+    AuthorsModule,
   ],
   controllers: [AppController],
   providers: [AppService, HttpExceptionFilter],

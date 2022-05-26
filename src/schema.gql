@@ -4,6 +4,28 @@
 
 directive @upper on FIELD_DEFINITION
 
+type Author {
+  firstName: String
+  id: Int!
+  lastName: String
+  posts: [Post]
+
+  """Book Title"""
+  title: String! @deprecated(reason: "Not useful in v2 schema")
+}
+
+type AuthorEdge {
+  cursor: String!
+  node: Author!
+}
+
+type AuthorPaginated {
+  edges: [AuthorEdge!]
+  hasNextPage: Boolean!
+  nodes: [Author!]
+  totalCount: Int!
+}
+
 """Date custom scalar type"""
 scalar Date
 
@@ -11,8 +33,19 @@ type Mutation {
   addRecipe(CreateRecipe: RecipeInput!): Recipe!
 }
 
+type Post {
+  id: Int!
+  title: String!
+  votes: Int
+}
+
 type Query {
   allRecipe: [Recipe!]!
+  findAllAuthor: [Author!]!
+
+  """Get Author Data"""
+  getAuthor(firstName: String, id: Int!, limit: Int = 10, offset: Int): Author
+  getPaginatedAuthor: AuthorPaginated!
   recipe(recipeId: Int!): Recipe!
 }
 
