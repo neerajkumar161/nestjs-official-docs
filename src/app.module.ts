@@ -21,7 +21,8 @@ import { RecipesModule } from './recipes/recipes.module';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       transformSchema: (schema) => upperDirectiveTransformer(schema, 'upper'),
-      installSubscriptionHandlers: true,
+      installSubscriptionHandlers: true, // Enabling Subscription - https://docs.nestjs.com/graphql/subscriptions#enable-subscriptions-with-apollo-driver,
+      // subscriptions: { 'graphql-ws': true },
       buildSchemaOptions: {
         directives: [
           new GraphQLDirective({

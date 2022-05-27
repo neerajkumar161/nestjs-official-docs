@@ -1,8 +1,19 @@
-import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+  Subscription,
+} from '@nestjs/graphql';
+import { PubSub } from 'graphql-subscriptions';
 import { BaseResolver } from 'src/common/resolvers/base.resolver';
 import { AuthorsService } from './authors.service';
 import { GetAuthorArgs } from './dto/get-authors.args';
 import { Author, AuthorPaginated } from './models/author.model';
+
+const pubSub = new PubSub();
 
 @Resolver(() => Author)
 export class AuthorsResolver extends BaseResolver(Author) {
@@ -33,5 +44,20 @@ export class AuthorsResolver extends BaseResolver(Author) {
   @Query(() => AuthorPaginated)
   async getPaginatedAuthor(): Promise<AuthorPaginated> {
     return this.authorsService.authorsPaginated();
+  }
+
+  @Mutation(() => Boolean)
+  async callSubscription(): Promise<boolean> {
+    pubSub.publish('commentAdded', {
+      commentAdded: 'Comment Added getPaginatedAuthor!',
+    });
+    return true;
+  }
+
+  // Subscriptions
+  @Subscription(() => String)
+  commentAdded() {
+    // console.log('Subscription called!');
+    return pubSub.asyncIterator('commentAdded');
   }
 }

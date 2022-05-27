@@ -31,6 +31,7 @@ scalar Date
 
 type Mutation {
   addRecipe(CreateRecipe: RecipeInput!): Recipe!
+  callSubscription: Boolean!
 }
 
 type Post {
@@ -64,4 +65,8 @@ input RecipeInput {
   id: ID
   ingredients: [String!]!
   title: String!
+}
+
+type Subscription {
+  commentAdded: String!
 }
