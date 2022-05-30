@@ -1,5 +1,6 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Paginated } from 'src/common/models/paginated.model';
+import { CustomUuidScalar } from 'src/common/scalars/uuid.scalar';
 import { Post } from './post.model';
 
 @ObjectType()
@@ -21,6 +22,9 @@ export class Author {
     deprecationReason: 'Not useful in v2 schema',
   })
   title: string;
+
+  @Field(() => CustomUuidScalar)
+  uuid: string;
 }
 
 @ObjectType()

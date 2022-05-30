@@ -12,6 +12,7 @@ type Author {
 
   """Book Title"""
   title: String! @deprecated(reason: "Not useful in v2 schema")
+  uuid: UUID!
 }
 
 type AuthorEdge {
@@ -70,3 +71,6 @@ input RecipeInput {
 type Subscription {
   commentAdded: String!
 }
+
+"""Custom UUID Scalar"""
+scalar UUID

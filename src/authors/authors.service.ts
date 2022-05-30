@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Author } from './models/author.model';
 
 @Injectable()
 export class AuthorsService {
@@ -12,6 +13,7 @@ export class AuthorsService {
           lastName: '',
           posts: [{ id: 1, title: '' }],
           title: '',
+          uuid: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',
         },
       },
     ],
@@ -22,18 +24,20 @@ export class AuthorsService {
         lastName: '',
         posts: [{ id: 1, title: '' }],
         title: '',
+        uuid: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',
       },
     ],
     hasNextPage: true,
     totalCount: 10,
   });
 
-  getAuthor = (id: number) =>
+  getAuthor = (id: number): Author =>
     ({
       id: id,
       firstName: '',
       lastName: '',
       posts: [{ id: 1, title: '' }],
       title: '',
+      uuid: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',
     } || null);
 }

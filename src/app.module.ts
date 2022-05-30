@@ -1,42 +1,15 @@
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { GraphQLModule } from '@nestjs/graphql';
-import { DirectiveLocation, GraphQLDirective } from 'graphql';
-import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthorsModule } from './authors/authors.module';
 import { CatsController } from './cats/cats.controller';
-import { upperDirectiveTransformer } from './common/directives/upper-case.directive';
 import { HttpExceptionFilter } from './exception-filters/http-exception.filters';
+import { GraphQLInjectionModule } from './graphql/graphql.module';
 import { logger } from './middlewares/logger.middleware';
 import { RecipesModule } from './recipes/recipes.module';
 
 @Module({
-  imports: [
-    // GraphQL - Integration - https://docs.nestjs.com/graphql/quick-start#getting-started-with-graphql--typescript
-    RecipesModule,
-    GraphQLModule.forRoot<ApolloDriverConfig>({
-      // include: [CatsModule],
-      driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      transformSchema: (schema) => upperDirectiveTransformer(schema, 'upper'),
-      installSubscriptionHandlers: true, // Enabling Subscription - https://docs.nestjs.com/graphql/subscriptions#enable-subscriptions-with-apollo-driver,
-      // subscriptions: { 'graphql-ws': true },
-      buildSchemaOptions: {
-        directives: [
-          new GraphQLDirective({
-            name: 'upper',
-            locations: [DirectiveLocation.FIELD_DEFINITION],
-          }),
-        ],
-      },
-      sortSchema: true,
-      // debug: false,
-      // plugins: [ApolloServerPluginLandingPageLocalDefault()],
-    }),
-    AuthorsModule,
-  ],
+  imports: [RecipesModule, GraphQLInjectionModule, AuthorsModule],
   controllers: [AppController],
   providers: [AppService, HttpExceptionFilter],
 })
