@@ -1,35 +1,25 @@
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
+import { IntrospectAndCompose } from '@apollo/gateway'
+import { ApolloGatewayDriver, ApolloGatewayDriverConfig } from '@nestjs/apollo'
 import { Module } from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
-import { DirectiveLocation, GraphQLDirective } from 'graphql'
-import { join } from 'path'
-import { upperDirectiveTransformer } from 'src/common/directives/upper-case.directive'
-import { CustomUuidScalar } from 'src/common/scalars/uuid.scalar'
-
-// GraphQL - Integration - https://docs.nestjs.com/graphql/quick-start#getting-started-with-graphql--typescript
+import { AuthorsModule } from 'src/authors/authors.module'
 
 @Module({
   imports: [
-    // LoggingPlugin,
-    GraphQLModule.forRoot<ApolloDriverConfig>({
-      resolvers: { UUID: CustomUuidScalar },
-      driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      installSubscriptionHandlers: true, // Enabling Subscription - https://docs.nestjs.com/graphql/subscriptions#enable-subscriptions-with-apollo-driver,
-      // subscriptions: { 'graphql-ws': true },
-      transformSchema: (schema) => upperDirectiveTransformer(schema, 'upper'),
-      buildSchemaOptions: {
-        directives: [
-          new GraphQLDirective({
-            name: 'upper', // author.model.ts
-            locations: [DirectiveLocation.FIELD_DEFINITION]
-          })
-        ]
-      },
-      sortSchema: true
-      // debug: false,
-      // plugins: [ApolloServerPluginLandingPageLocalDefault()],
+    GraphQLModule.forRoot<ApolloGatewayDriverConfig>({
+      driver: ApolloGatewayDriver,
+      server: { cors: true },
+      gateway: {
+        supergraphSdl: new IntrospectAndCompose({
+          subgraphs: [
+            { name: 'authors', url: 'http://user-service/graphql' }, // using this we can fetch schema graphs from urls
+            { name: 'posts', url: 'http://post-service/graphql' }
+          ],
+          subgraphHealthCheck: true
+        })
+      }
     })
-  ]
+  ],
+  providers: [AuthorsModule]
 })
 export class GraphQLInjectionModule {}
