@@ -34,7 +34,7 @@ export class AuthorsService {
   getAuthor = (id: number): Author =>
     ({
       id: id,
-      firstName: '',
+      firstName: 'neeraj',
       lastName: '',
       posts: [{ id: 1, title: '' }],
       title: '',

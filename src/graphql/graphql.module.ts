@@ -14,13 +14,13 @@ import { CustomUuidScalar } from 'src/common/scalars/uuid.scalar';
       resolvers: { UUID: CustomUuidScalar },
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      transformSchema: (schema) => upperDirectiveTransformer(schema, 'upper'),
       installSubscriptionHandlers: true, // Enabling Subscription - https://docs.nestjs.com/graphql/subscriptions#enable-subscriptions-with-apollo-driver,
       // subscriptions: { 'graphql-ws': true },
+      transformSchema: (schema) => upperDirectiveTransformer(schema, 'upper'),
       buildSchemaOptions: {
         directives: [
           new GraphQLDirective({
-            name: 'upper',
+            name: 'upper', // author.model.ts
             locations: [DirectiveLocation.FIELD_DEFINITION],
           }),
         ],
