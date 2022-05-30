@@ -8,6 +8,7 @@ import {
   Subscription,
 } from '@nestjs/graphql';
 import { PubSub } from 'graphql-subscriptions';
+import { loggerMiddleware } from 'src/common/middlewares/logger.middleware';
 import { BaseResolver } from 'src/common/resolvers/base.resolver';
 import { AuthorsService } from './authors.service';
 import { GetAuthorArgs } from './dto/get-authors.args';
@@ -33,7 +34,7 @@ export class AuthorsResolver extends BaseResolver(Author) {
     return this.authorsService.getAuthor(args.id);
   }
 
-  @ResolveField()
+  @ResolveField(() => undefined, { middleware: [loggerMiddleware] })
   // Name of Field that contains in getAuthor query function - eg. posts, title etc.
   async posts(@Parent() author: Author) {
     console.log('Resolve field author', author);

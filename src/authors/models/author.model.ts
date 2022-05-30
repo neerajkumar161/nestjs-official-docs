@@ -1,11 +1,12 @@
 import { Directive, Field, Int, ObjectType } from '@nestjs/graphql';
+import { loggerMiddleware } from 'src/common/middlewares/logger.middleware';
 import { Paginated } from 'src/common/models/paginated.model';
 import { CustomUuidScalar } from 'src/common/scalars/uuid.scalar';
 import { Post } from './post.model';
 
 @ObjectType()
 export class Author {
-  @Field(() => Int)
+  @Field(() => Int, { middleware: [loggerMiddleware] })
   id: number;
 
   @Directive('@upper') // this will tranform the result to uppercase, check upper-case.directive.ts
