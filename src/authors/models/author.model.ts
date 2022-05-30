@@ -12,14 +12,14 @@ export class Author {
   id: number
 
   @Directive('@upper') // this will tranform the result to uppercase, check upper-case.directive.ts
-  @Field({ nullable: true })
+  // @Field({ nullable: true })   // CLI-Plugin - https://docs.nestjs.com/graphql/cli-plugin#overview
   firstName?: string
 
-  @Field({ nullable: true })
+  // @Field({ nullable: true })
   lastName?: string
 
-  @Field(() => [Post], { nullable: 'itemsAndList' })
-  posts: Post[]
+  // @Field(() => [Post], { nullable: 'itemsAndList' })
+  posts?: Post[]
 
   @Field({
     description: 'Book Title',

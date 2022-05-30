@@ -8,8 +8,8 @@ type Author {
   firstName: String
   id: Int!
   lastName: String
-  posts: [Post]
-  role: String!
+  posts: [Post!]
+  role: String
 
   """Book Title"""
   title: String! @deprecated(reason: "Not useful in v2 schema")
