@@ -10,6 +10,7 @@ import { CustomUuidScalar } from 'src/common/scalars/uuid.scalar';
 
 @Module({
   imports: [
+    // LoggingPlugin,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       resolvers: { UUID: CustomUuidScalar },
       driver: ApolloDriver,
