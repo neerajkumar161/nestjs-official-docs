@@ -8,4 +8,7 @@ export class GetAuthorArgs extends PaginationArgs {
 
   @Field(() => Int)
   id: number
+
+  @Field({ nullable: true })
+  role?: string
 }

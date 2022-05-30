@@ -9,6 +9,7 @@ type Author {
   id: Int!
   lastName: String
   posts: [Post]
+  role: String!
 
   """Book Title"""
   title: String! @deprecated(reason: "Not useful in v2 schema")
@@ -46,7 +47,7 @@ type Query {
   findAllAuthor: [Author!]!
 
   """Get Author Data"""
-  getAuthor(firstName: String, id: Int!, limit: Int = 10, offset: Int): Author
+  getAuthor(firstName: String, id: Int!, limit: Int = 10, offset: Int, role: String): Author
   getPaginatedAuthor: AuthorPaginated!
   recipe(recipeId: Int!): Recipe!
 }

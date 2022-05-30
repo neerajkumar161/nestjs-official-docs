@@ -1,4 +1,6 @@
-import { Directive, Field, Int, ObjectType } from '@nestjs/graphql'
+import { Directive, Extensions, Field, Int, ObjectType } from '@nestjs/graphql'
+import { Role } from 'src/common/enums/roles.enum'
+import { checkRoleMiddleware } from 'src/common/middlewares/check-role.middleware'
 import { loggerMiddleware } from 'src/common/middlewares/logger.middleware'
 import { Paginated } from 'src/common/models/paginated.model'
 import { CustomUuidScalar } from 'src/common/scalars/uuid.scalar'
@@ -27,6 +29,10 @@ export class Author {
 
   @Field(() => CustomUuidScalar)
   uuid: string
+
+  @Field({ middleware: [checkRoleMiddleware] })
+  @Extensions({ role: Role.ADMIN })
+  role?: string
 }
 
 @ObjectType()
