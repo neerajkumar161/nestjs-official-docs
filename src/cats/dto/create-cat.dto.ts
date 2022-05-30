@@ -1,20 +1,20 @@
-import { Optional } from '@nestjs/common';
-import { IsInt, IsString } from 'class-validator';
+import { Optional } from '@nestjs/common'
+import { IsInt, IsString } from 'class-validator'
 
 export class CreateCatDto {
   @IsInt()
-  id: number;
+  id: number
 
   @IsString()
-  name: string;
+  name: string
 
   @IsInt()
-  age: number;
+  age: number
 
   @IsString()
-  breed: string;
+  breed: string
 
   @IsString()
   @Optional()
-  password: string;
+  password: string
 }

@@ -1,10 +1,10 @@
-import { ArgsType, Field, Int } from '@nestjs/graphql';
+import { ArgsType, Field, Int } from '@nestjs/graphql'
 
 @ArgsType()
 export class PaginationArgs {
   @Field(() => Int, { nullable: true }) // set optional in query
-  offset: number;
+  offset: number
 
   @Field(() => Int)
-  limit = 10;
+  limit = 10
 }

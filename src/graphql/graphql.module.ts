@@ -1,10 +1,10 @@
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { Module } from '@nestjs/common';
-import { GraphQLModule } from '@nestjs/graphql';
-import { DirectiveLocation, GraphQLDirective } from 'graphql';
-import { join } from 'path';
-import { upperDirectiveTransformer } from 'src/common/directives/upper-case.directive';
-import { CustomUuidScalar } from 'src/common/scalars/uuid.scalar';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
+import { Module } from '@nestjs/common'
+import { GraphQLModule } from '@nestjs/graphql'
+import { DirectiveLocation, GraphQLDirective } from 'graphql'
+import { join } from 'path'
+import { upperDirectiveTransformer } from 'src/common/directives/upper-case.directive'
+import { CustomUuidScalar } from 'src/common/scalars/uuid.scalar'
 
 // GraphQL - Integration - https://docs.nestjs.com/graphql/quick-start#getting-started-with-graphql--typescript
 
@@ -22,14 +22,14 @@ import { CustomUuidScalar } from 'src/common/scalars/uuid.scalar';
         directives: [
           new GraphQLDirective({
             name: 'upper', // author.model.ts
-            locations: [DirectiveLocation.FIELD_DEFINITION],
-          }),
-        ],
+            locations: [DirectiveLocation.FIELD_DEFINITION]
+          })
+        ]
       },
-      sortSchema: true,
+      sortSchema: true
       // debug: false,
       // plugins: [ApolloServerPluginLandingPageLocalDefault()],
-    }),
-  ],
+    })
+  ]
 })
 export class GraphQLInjectionModule {}

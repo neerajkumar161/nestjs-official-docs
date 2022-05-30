@@ -1,12 +1,12 @@
-import { GraphQLScalarType } from 'graphql';
+import { GraphQLScalarType } from 'graphql'
 
-const regex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const regex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 
 function validate(uuid: unknown): string | never {
   if (typeof uuid !== 'string' || !regex.test(uuid)) {
-    throw new Error('invalid uuid');
+    throw new Error('invalid uuid')
   }
-  return uuid;
+  return uuid
 }
 
 export const CustomUuidScalar = new GraphQLScalarType({
@@ -14,5 +14,5 @@ export const CustomUuidScalar = new GraphQLScalarType({
   description: 'Custom UUID Scalar',
   serialize: (value) => validate(value),
   parseValue: (value) => validate(value),
-  parseLiteral: (ast: any) => validate(ast.value),
-});
+  parseLiteral: (ast: any) => validate(ast.value)
+})

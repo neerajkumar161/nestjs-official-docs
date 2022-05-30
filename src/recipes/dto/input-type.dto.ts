@@ -1,20 +1,20 @@
-import { Directive, Field, ID, InputType } from '@nestjs/graphql';
+import { Directive, Field, ID, InputType } from '@nestjs/graphql'
 
 @InputType()
 export class RecipeInput {
   @Field(() => ID, { nullable: true })
-  id: number;
+  id: number
 
   @Directive('@upper')
   @Field()
-  title: string;
+  title: string
 
   @Field()
-  description: string;
+  description: string
 
   @Field({ nullable: true })
-  createdAt: Date;
+  createdAt: Date
 
   @Field(() => [String])
-  ingredients: string[];
+  ingredients: string[]
 }

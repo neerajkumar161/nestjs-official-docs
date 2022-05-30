@@ -1,3 +1,3 @@
 export interface CreateCat {
-  message: string;
+  message: string
 }

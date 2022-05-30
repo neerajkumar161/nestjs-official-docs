@@ -1,12 +1,12 @@
-import { IsArray, IsString } from 'class-validator';
+import { IsArray, IsString } from 'class-validator'
 
 export class CreateRecipeDto {
   @IsString()
-  title: string;
+  title: string
 
   @IsString()
-  description: string;
+  description: string
 
   @IsArray()
-  ingredients: string[];
+  ingredients: string[]
 }
