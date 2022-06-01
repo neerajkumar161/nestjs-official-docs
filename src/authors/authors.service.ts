@@ -6,6 +6,7 @@ import { UpdateAuthorInput } from './dto/update-author.input';
 @Injectable()
 export class AuthorsService {
   create(createAuthorInput: CreateAuthorInput) {
+    console.log(createAuthorInput);
     return 'This action adds a new author';
   }
 
