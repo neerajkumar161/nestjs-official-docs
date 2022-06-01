@@ -17,6 +17,7 @@ import { CatsController } from './cats/cats.controller';
 import { CatsModule } from './cats/cats.module';
 import configuration from './config/configuration';
 import { HttpExceptionFilter } from './exception-filters/http-exception.filters';
+import { HealthModule } from './health/health.module';
 import { logger } from './middlewares/logger.middleware';
 import { OrdersModule } from './orders/orders.module';
 import { Cat, CatSchema } from './schema/cat.schema';
@@ -65,6 +66,7 @@ import { Cat, CatSchema } from './schema/cat.schema';
     AuthModule,
     AuthorsModule,
     RouterModule.register([{ path: 'v1', module: CatsModule }]),
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [AppService, HttpExceptionFilter],
