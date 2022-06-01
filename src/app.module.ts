@@ -18,6 +18,7 @@ import { HttpExceptionFilter } from './exception-filters/http-exception.filters'
 import { logger } from './middlewares/logger.middleware';
 import { OrdersModule } from './orders/orders.module';
 import { Cat, CatSchema } from './schema/cat.schema';
+import { AuthorsModule } from './authors/authors.module';
 
 @Module({
   imports: [
@@ -61,6 +62,7 @@ import { Cat, CatSchema } from './schema/cat.schema';
       'cats',
     ),
     AuthModule,
+    AuthorsModule,
     // UsersModule,
   ],
   controllers: [AppController],
