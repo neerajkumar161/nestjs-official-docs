@@ -5,12 +5,14 @@ import {
   NestModule,
 } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { RouterModule } from '@nestjs/core';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { MongooseModule } from '@nestjs/mongoose';
 import * as Joi from 'joi';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { AuthorsModule } from './authors/authors.module';
 import { CatsController } from './cats/cats.controller';
 import { CatsModule } from './cats/cats.module';
 import configuration from './config/configuration';
@@ -18,7 +20,6 @@ import { HttpExceptionFilter } from './exception-filters/http-exception.filters'
 import { logger } from './middlewares/logger.middleware';
 import { OrdersModule } from './orders/orders.module';
 import { Cat, CatSchema } from './schema/cat.schema';
-import { AuthorsModule } from './authors/authors.module';
 
 @Module({
   imports: [
@@ -63,7 +64,7 @@ import { AuthorsModule } from './authors/authors.module';
     ),
     AuthModule,
     AuthorsModule,
-    // UsersModule,
+    RouterModule.register([{ path: 'v1', module: CatsModule }]),
   ],
   controllers: [AppController],
   providers: [AppService, HttpExceptionFilter],
